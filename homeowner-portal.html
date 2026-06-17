@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  var s = sessionStorage.getItem('innovista_session');
+  if (!s) { window.location.replace('login.html'); }
+})();
+</script>
+
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>InnoVista — My Service Portal</title>
@@ -100,6 +107,16 @@
   .tip-detail-body{font-size:14px;color:var(--mute);line-height:1.7;}
   .tip-detail-body ul{padding-left:18px;margin-top:10px;}
   .tip-detail-body li{margin-bottom:6px;}
+  .video-embed{margin:20px 0;border-radius:10px;overflow:hidden;border:0.5px solid var(--line);background:var(--surface);}
+  .video-embed iframe{width:100%;aspect-ratio:16/9;display:block;border:none;}
+  .video-label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);padding:10px 14px;border-top:0.5px solid var(--line);}
+  .steps-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);margin:24px 0 12px;}
+  .step-list{list-style:none;padding:0;margin:0;}
+  .step-list li{display:flex;gap:14px;padding:12px 0;border-bottom:0.5px solid var(--line);}
+  .step-list li:last-child{border-bottom:none;}
+  .step-num-circle{width:24px;height:24px;border-radius:50%;background:rgba(34,197,94,.1);border:0.5px solid rgba(34,197,94,.25);color:var(--green-dim);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .step-text{font-size:14px;color:var(--mute);line-height:1.6;padding-top:1px;}
+  .step-text strong{color:var(--text);}
   .btn-book{display:block;width:100%;background:#fff;color:#0F0F0F;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;text-align:center;text-decoration:none;margin-bottom:10px;}
   .btn-secondary{display:block;width:100%;background:transparent;color:var(--text);border:0.5px solid var(--line2);border-radius:8px;padding:12px;font-size:14px;cursor:pointer;text-align:center;text-decoration:none;}
   footer{border-top:0.5px solid var(--line);}
@@ -184,10 +201,48 @@
           <div class="tip" onclick="showTip('tuneup')"><div class="tip-title">Annual tune-up</div><div class="tip-desc">Book before summer every year.</div><div class="tip-more">Read more →</div></div>
         </div>
       </div>
-      <div class="tip-detail" id="tip-filter"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Changing your air filter</h2><div class="tip-detail-body"><p>A clogged filter makes your system work harder.</p><ul><li>Change every <strong>90 days</strong></li><li>With pets, every <strong>30–60 days</strong></li><li>Use MERV 8–11 rated filters</li></ul></div></div>
-      <div class="tip-detail" id="tip-thermostat"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Setting your thermostat</h2><div class="tip-detail-body"><p>The right setting makes a big difference in comfort and cost.</p><ul><li>Set to <strong>78°F</strong> when home</li><li>Set to <strong>82°F</strong> when away</li><li>Avoid below 72°F</li></ul></div></div>
-      <div class="tip-detail" id="tip-outdoor"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Clearing your outdoor unit</h2><div class="tip-detail-body"><p>Your condenser needs airflow to release heat.</p><ul><li>Keep <strong>2 feet</strong> of clearance</li><li>Remove debris monthly</li></ul></div></div>
-      <div class="tip-detail" id="tip-tuneup"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Annual tune-up</h2><div class="tip-detail-body"><p>Book March–April to beat the summer rush.</p><ul><li>Checks refrigerant, electrical, drain lines</li><li>Extends system life 3–5 years</li></ul><br><a class="btn-book" onclick="show('contact',null)" href="#">Book your tune-up →</a></div></div>
+      <div class="tip-detail" id="tip-filter"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Changing your air filter</h2><div class="tip-detail-body"><p>A clogged filter makes your system work harder.</p><ul><li>Change every <strong>90 days</strong></li><li>With pets, every <strong>30–60 days</strong></li><li>Use MERV 8–11 rated filters</li></ul>
+      <div class="video-embed"><iframe src="https://www.youtube.com/embed/wAyt9stpaQ0" title="How to change your AC filter" allowfullscreen></iframe><div class="video-label">▶ Watch: How to change your AC air filter (3 min)</div></div>
+      <div class="steps-label">Step-by-step</div>
+      <ul class="step-list">
+        <li><div class="step-num-circle">1</div><div class="step-text">Turn off your HVAC system at the thermostat before starting.</div></li>
+        <li><div class="step-num-circle">2</div><div class="step-text">Locate the filter slot — usually near the return air duct or inside the air handler.</div></li>
+        <li><div class="step-num-circle">3</div><div class="step-text">Slide the old filter out and check the size printed on the frame.</div></li>
+        <li><div class="step-num-circle">4</div><div class="step-text">Insert the new filter with the <strong>airflow arrow pointing toward the unit</strong>.</div></li>
+        <li><div class="step-num-circle">5</div><div class="step-text">Turn your system back on and set a reminder for 90 days from today.</div></li>
+      </ul>
+      </div></div>
+      <div class="tip-detail" id="tip-thermostat"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Setting your thermostat</h2><div class="tip-detail-body"><p>The right setting makes a big difference in comfort and cost.</p><ul><li>Set to <strong>78°F</strong> when home</li><li>Set to <strong>82°F</strong> when away</li><li>Avoid below 72°F</li></ul>
+      <div class="video-embed"><iframe src="https://www.youtube.com/embed/4F4qzPHJCYw" title="Optimal thermostat settings" allowfullscreen></iframe><div class="video-label">▶ Watch: Best thermostat settings for Florida summers (2 min)</div></div>
+      <div class="steps-label">Step-by-step</div>
+      <ul class="step-list">
+        <li><div class="step-num-circle">1</div><div class="step-text">Open your thermostat app or panel and select <strong>"Home"</strong> mode.</div></li>
+        <li><div class="step-num-circle">2</div><div class="step-text">Set the temperature to <strong>78°F</strong> for daytime comfort.</div></li>
+        <li><div class="step-num-circle">3</div><div class="step-text">Create an <strong>"Away"</strong> schedule set to 82°F for when you leave.</div></li>
+        <li><div class="step-num-circle">4</div><div class="step-text">Save the schedule so it runs automatically every day.</div></li>
+      </ul>
+      </div></div>
+      <div class="tip-detail" id="tip-outdoor"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Clearing your outdoor unit</h2><div class="tip-detail-body"><p>Your condenser needs airflow to release heat.</p><ul><li>Keep <strong>2 feet</strong> of clearance</li><li>Remove debris monthly</li></ul>
+      <div class="video-embed"><iframe src="https://www.youtube.com/embed/V2_yRYqRrkA" title="Cleaning your outdoor AC unit" allowfullscreen></iframe><div class="video-label">▶ Watch: How to clean your outdoor condenser unit (4 min)</div></div>
+      <div class="steps-label">Step-by-step</div>
+      <ul class="step-list">
+        <li><div class="step-num-circle">1</div><div class="step-text">Turn off power to the unit at the breaker before touching it.</div></li>
+        <li><div class="step-num-circle">2</div><div class="step-text">Clear leaves, grass clippings, and debris from around the base.</div></li>
+        <li><div class="step-num-circle">3</div><div class="step-text">Trim back any plants or shrubs within <strong>2 feet</strong> of the unit.</div></li>
+        <li><div class="step-num-circle">4</div><div class="step-text">Gently rinse the fins with a garden hose, spraying from the inside out.</div></li>
+        <li><div class="step-num-circle">5</div><div class="step-text">Let it dry fully before restoring power.</div></li>
+      </ul>
+      </div></div>
+      <div class="tip-detail" id="tip-tuneup"><div class="back-btn" onclick="backToTips()">← All tips</div><h2>Annual tune-up</h2><div class="tip-detail-body"><p>Book March–April to beat the summer rush.</p><ul><li>Checks refrigerant, electrical, drain lines</li><li>Extends system life 3–5 years</li></ul>
+      <div class="video-embed"><iframe src="https://www.youtube.com/embed/T7lhPpgz8Lk" title="What happens during an AC tune-up" allowfullscreen></iframe><div class="video-label">▶ Watch: What to expect during an annual AC tune-up (5 min)</div></div>
+      <div class="steps-label">What we'll check during your visit</div>
+      <ul class="step-list">
+        <li><div class="step-num-circle">1</div><div class="step-text">Refrigerant levels checked and topped off if needed.</div></li>
+        <li><div class="step-num-circle">2</div><div class="step-text">Electrical connections inspected for wear.</div></li>
+        <li><div class="step-num-circle">3</div><div class="step-text">Condensate drain line cleared to prevent leaks.</div></li>
+        <li><div class="step-num-circle">4</div><div class="step-text">Coils cleaned for maximum efficiency.</div></li>
+      </ul>
+      <br><a class="btn-book" onclick="show('contact',null)" href="#">Book your tune-up →</a></div></div>
     </div>
 
     <div class="content-area" id="area-contact">

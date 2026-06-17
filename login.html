@@ -101,6 +101,7 @@
 
 <script>
 let currentRole='admin';
+sessionStorage.removeItem('innovista_session');
 const CREDS={admin:{email:'chris@innovista.com',pass:'admin123',dest:'admin-plans.html'},client:{email:'client@hvaccompany.example',pass:'client123',dest:'client-dashboard.html'},homeowner:{phone:'5558675309',dest:'homeowner-portal.html'}};
 function setRole(role){currentRole=role;['admin','client','homeowner'].forEach(r=>{document.getElementById('tab-'+r).classList.toggle('active',r===role);document.getElementById('form-'+r).style.display=r===role?'block':'none';});document.getElementById('error-msg').classList.remove('show');}
 function tryLogin(role){const err=document.getElementById('error-msg');err.classList.remove('show');
@@ -108,7 +109,7 @@ if(role==='admin'){const e=document.getElementById('admin-email').value.trim().t
 if(role==='client'){const e=document.getElementById('client-email').value.trim().toLowerCase(),p=document.getElementById('client-pass').value.trim();if(e===CREDS.client.email&&p===CREDS.client.pass){go(CREDS.client.dest);return;}}
 if(role==='homeowner'){const ph=document.getElementById('hw-phone').value.replace(/\D/g,'');if(ph===CREDS.homeowner.phone||ph===''){go(CREDS.homeowner.dest);return;}}
 err.classList.add('show');}
-function go(dest){window.location.href=dest;}
+function go(dest){sessionStorage.setItem('innovista_session', JSON.stringify({role: currentRole, ts: Date.now()}));window.location.href=dest;}
 document.addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin(currentRole);});
 </script>
 </body>
