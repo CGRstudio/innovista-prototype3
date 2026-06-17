@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>InnoVista — Business Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0F0F0F;--surface:#161616;--surface2:#1C1C1C;
+    --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+    --green:#22C55E;--green-dim:#7BC47B;
+    --text:#FFFFFF;--mute:rgba(255,255,255,0.55);--dim:rgba(255,255,255,0.4);
+    --fb:'Inter',sans-serif;--sidebar:220px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--fb);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;}
+  header{border-bottom:0.5px solid var(--line);position:sticky;top:0;z-index:10;background:var(--bg);}
+  .nav{display:flex;align-items:center;gap:11px;padding:0 24px;height:60px;}
+  .brand{font-size:17px;font-weight:500;color:var(--text);text-decoration:none;letter-spacing:-0.02em;}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+  .role-badge{font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--green-dim);background:rgba(34,197,94,0.1);border:0.5px solid rgba(34,197,94,0.25);padding:4px 10px;border-radius:999px;}
+  .plan-badge{font-size:11px;font-weight:500;padding:4px 10px;border-radius:999px;background:rgba(251,191,36,0.1);color:#FBBF24;border:0.5px solid rgba(251,191,36,0.25);}
+  .signout{font-size:13px;color:var(--mute);text-decoration:none;padding:7px 14px;border:0.5px solid var(--line);border-radius:7px;}
+  .signout:hover{color:var(--text);border-color:var(--line2);}
+  .layout{display:flex;flex:1;}
+  aside{width:var(--sidebar);border-right:0.5px solid var(--line);padding:20px 0;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
+  .aside-section{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);padding:0 16px;margin:20px 0 6px;}
+  .aside-section:first-child{margin-top:0;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:14px;color:var(--mute);text-decoration:none;cursor:pointer;border-left:2px solid transparent;}
+  .nav-item:hover{color:var(--text);}
+  .nav-item.active{color:var(--text);background:var(--surface);border-left-color:var(--green);}
+  .nav-icon{width:16px;height:16px;flex-shrink:0;opacity:.7;}
+  .nav-item.active .nav-icon{opacity:1;}
+  .locked{opacity:.35;pointer-events:none;}
+  .locked-tip{font-size:10px;color:var(--dim);background:var(--surface2);border:0.5px solid var(--line);border-radius:4px;padding:1px 6px;margin-left:auto;}
+  .main{flex:1;padding:32px 36px;}
+  .page-title{font-size:22px;font-weight:500;letter-spacing:-0.02em;margin-bottom:4px;}
+  .page-sub{font-size:14px;color:var(--mute);margin-bottom:24px;}
+  .content-area{display:none;}
+  .content-area.active{display:block;}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:0.5px solid var(--line);margin-bottom:28px;}
+  .stat{background:var(--bg);padding:20px;}
+  .stat-val{font-size:30px;font-weight:500;}
+  .stat-label{font-size:12px;color:var(--dim);margin-top:4px;}
+  .section-title{font-size:15px;font-weight:500;margin-bottom:14px;display:flex;justify-content:space-between;}
+  .section-title a{font-size:13px;color:var(--green-dim);text-decoration:none;cursor:pointer;}
+  .pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:0.5px solid var(--line);margin-bottom:28px;}
+  .stage{background:var(--bg);padding:14px;}
+  .stage-name{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);margin-bottom:10px;padding-bottom:8px;border-bottom:0.5px solid var(--line);}
+  .lead-card{background:var(--surface);border-radius:8px;padding:10px 12px;margin-bottom:8px;cursor:pointer;border:0.5px solid var(--line);}
+  .lead-card:hover{border-color:var(--line2);}
+  .lead-name{font-size:13px;font-weight:500;}
+  .lead-detail{font-size:11px;color:var(--dim);margin-top:2px;}
+  .lead-badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:999px;margin-top:5px;}
+  .badge-new{background:rgba(34,197,94,.12);color:var(--green-dim);}
+  .badge-contacted{background:rgba(96,165,250,.12);color:#60A5FA;}
+  .badge-qualified{background:rgba(251,191,36,.12);color:#FBBF24;}
+  .badge-booked{background:rgba(34,197,94,.2);color:#4ADE80;}
+  .cal-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+  .cal-title-text{font-size:15px;font-weight:500;}
+  .cal-toggles{display:flex;border:0.5px solid var(--line);border-radius:7px;overflow:hidden;}
+  .cal-tog{padding:7px 14px;font-size:13px;color:var(--mute);cursor:pointer;border:none;background:transparent;font-family:var(--fb);}
+  .cal-tog.active{background:#fff;color:#0F0F0F;}
+  .cal-nav{display:flex;gap:8px;align-items:center;}
+  .cal-nav-btn{border:0.5px solid var(--line);border-radius:7px;color:var(--mute);font-size:15px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;}
+  .cal-day-names{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-bottom:1px;}
+  .cal-day-name{font-size:11px;color:var(--dim);text-align:center;padding:6px 0;}
+  .cal-month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:0.5px solid var(--line);}
+  .cal-cell{background:var(--bg);padding:9px 8px;min-height:74px;}
+  .cal-cell.today{background:var(--surface);}
+  .cal-cell.empty{background:transparent;}
+  .cal-num{font-size:12px;color:var(--dim);margin-bottom:5px;}
+  .cal-num.today-num{color:var(--green-dim);font-weight:500;}
+  .cal-appt{background:rgba(34,197,94,.12);border-radius:4px;padding:3px 7px;font-size:10px;color:var(--green-dim);margin-bottom:3px;}
+  .cal-week-grid{display:grid;grid-template-columns:60px repeat(7,1fr);gap:1px;background:var(--line);border:0.5px solid var(--line);}
+  .cal-week-head{background:var(--surface);padding:10px 8px;text-align:center;font-size:11px;color:var(--dim);}
+  .cal-week-head.today-col{color:var(--green-dim);}
+  .cal-time-col{background:var(--surface);padding:8px 6px;font-size:10px;color:var(--dim);text-align:right;height:42px;display:flex;align-items:center;justify-content:flex-end;}
+  .cal-week-cell{background:var(--bg);height:42px;position:relative;}
+  .cal-week-cell.today-col{background:var(--surface);}
+  .cal-week-appt{position:absolute;left:3px;right:3px;top:3px;background:rgba(34,197,94,.15);border-radius:4px;padding:3px 6px;font-size:10px;color:var(--green-dim);}
+  .cal-day-grid{display:grid;grid-template-columns:60px 1fr;gap:1px;background:var(--line);border:0.5px solid var(--line);max-height:500px;overflow-y:auto;}
+  .cal-day-time{background:var(--surface);padding:8px 10px;font-size:11px;color:var(--dim);text-align:right;height:50px;}
+  .cal-day-slot{background:var(--bg);height:50px;position:relative;border-bottom:0.5px solid var(--line);}
+  .cal-day-appt{position:absolute;left:8px;right:8px;top:4px;background:rgba(34,197,94,.15);border-left:2px solid var(--green);border-radius:5px;padding:6px 10px;font-size:12px;color:var(--green-dim);}
+  .add-appt-btn{display:inline-flex;gap:6px;font-size:13px;color:var(--green-dim);background:rgba(34,197,94,.1);border:0.5px solid rgba(34,197,94,.25);border-radius:8px;padding:8px 16px;cursor:pointer;margin-bottom:18px;}
+  .lead-table{width:100%;border-collapse:collapse;}
+  .lead-table thead th{text-align:left;font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--dim);padding:10px 12px;border-bottom:0.5px solid var(--line2);}
+  .lead-table tbody tr{border-bottom:0.5px solid var(--line);cursor:pointer;}
+  .lead-table tbody tr:hover{background:var(--surface);}
+  .lead-table tbody td{padding:13px 12px;font-size:14px;color:var(--mute);}
+  .lead-table tbody td:first-child{color:var(--text);}
+  .notif{display:flex;gap:14px;background:var(--surface);border-radius:10px;padding:16px;border:0.5px solid var(--line);margin-bottom:10px;}
+  .notif-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:6px;}
+  .notif-dot.read{background:var(--dim);}
+  .notif-text{font-size:14px;color:var(--text);line-height:1.5;}
+  .notif-time{font-size:12px;color:var(--dim);margin-top:3px;}
+  footer{border-top:0.5px solid var(--line);}
+  .foot{display:flex;justify-content:space-between;padding:16px 24px;font-size:12px;color:var(--dim);flex-wrap:wrap;gap:10px;}
+  .foot a{color:var(--mute);text-decoration:none;}
+</style>
+</head>
+<body>
+<header><div class="nav">
+  <a class="brand" href="index.html">InnoVista</a>
+  <div class="nav-right">
+    <span class="role-badge">Business Owner</span>
+    <span class="plan-badge">Pro Plan</span>
+    <a class="signout" href="login.html">Sign out</a>
+  </div>
+</div></header>
+
+<div class="layout">
+  <aside>
+    <div class="aside-section">Dashboard</div>
+    <a class="nav-item active" onclick="show('overview',this)" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</a>
+    <a class="nav-item" onclick="show('pipeline',this)" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Pipeline</a>
+    <a class="nav-item" onclick="show('leads',this)" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>Lead List</a>
+    <div class="aside-section">Scheduling</div>
+    <a class="nav-item" onclick="show('calendar',this)" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendar</a>
+    <a class="nav-item" onclick="show('jobs',this)" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Jobs</a>
+    <div class="aside-section">Communications</div>
+    <a class="nav-item" onclick="show('notifications',this)" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</a>
+    <a class="nav-item locked" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 20 16.5H9l-4.5 3.5V7A1.5 1.5 0 0 1 6 5.5Z"/></svg>AI Chatbot<span class="locked-tip">Pro</span></a>
+    <div class="aside-section">Account</div>
+    <a class="nav-item" onclick="show('settings',this)" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/></svg>Settings</a>
+    <a class="nav-item" href="login.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a>
+  </aside>
+
+  <div class="main">
+    <div class="content-area active" id="area-overview">
+      <div class="page-title">Welcome back, Premier HVAC</div>
+      <p class="page-sub">Here's your business at a glance.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-val">24</div><div class="stat-label">Total leads</div></div>
+        <div class="stat"><div class="stat-val">9</div><div class="stat-label">Booked jobs</div></div>
+        <div class="stat"><div class="stat-val">6</div><div class="stat-label">This week</div></div>
+        <div class="stat"><div class="stat-val">$18,400</div><div class="stat-label">Pipeline value</div></div>
+      </div>
+      <div class="section-title">Pipeline snapshot <a onclick="show('pipeline',null)">View all →</a></div>
+      <div class="pipeline">
+        <div class="stage"><div class="stage-name">New</div><div class="lead-card"><div class="lead-name">Sarah M.</div><div class="lead-detail">AC not cooling · Miami</div><span class="lead-badge badge-new">New</span></div><div class="lead-card"><div class="lead-name">Tom R.</div><div class="lead-detail">Tune-up · Doral</div><span class="lead-badge badge-new">New</span></div></div>
+        <div class="stage"><div class="stage-name">Qualified</div><div class="lead-card"><div class="lead-name">Marcus J.</div><div class="lead-detail">Full replace · Kendall</div><span class="lead-badge badge-qualified">Qualified</span></div></div>
+        <div class="stage"><div class="stage-name">Booked</div><div class="lead-card"><div class="lead-name">James T.</div><div class="lead-detail">Install · Jun 18</div><span class="lead-badge badge-booked">Booked ✓</span></div></div>
+      </div>
+    </div>
+
+    <div class="content-area" id="area-pipeline">
+      <div class="page-title">Lead Pipeline</div>
+      <p class="page-sub">Track every lead from first contact to completed job.</p>
+      <div class="pipeline" style="grid-template-columns:repeat(5,1fr);">
+        <div class="stage"><div class="stage-name">New Lead</div><div class="lead-card"><div class="lead-name">Sarah M.</div><div class="lead-detail">AC not cooling</div><span class="lead-badge badge-new">New</span></div><div class="lead-card"><div class="lead-name">Tom R.</div><div class="lead-detail">Tune-up</div><span class="lead-badge badge-new">New</span></div></div>
+        <div class="stage"><div class="stage-name">Contacted</div><div class="lead-card"><div class="lead-name">Linda K.</div><div class="lead-detail">Duct cleaning</div><span class="lead-badge badge-contacted">Contacted</span></div></div>
+        <div class="stage"><div class="stage-name">Qualified</div><div class="lead-card"><div class="lead-name">Marcus J.</div><div class="lead-detail">Full replace</div><span class="lead-badge badge-qualified">Qualified</span></div><div class="lead-card"><div class="lead-name">Anna P.</div><div class="lead-detail">Emergency</div><span class="lead-badge badge-qualified">Qualified</span></div></div>
+        <div class="stage"><div class="stage-name">Booked</div><div class="lead-card"><div class="lead-name">James T.</div><div class="lead-detail">Jun 18</div><span class="lead-badge badge-booked">Booked ✓</span></div><div class="lead-card"><div class="lead-name">Rosa V.</div><div class="lead-detail">Jun 19</div><span class="lead-badge badge-booked">Booked ✓</span></div></div>
+        <div class="stage"><div class="stage-name">Complete</div><div class="lead-card"><div class="lead-name">Derek W.</div><div class="lead-detail">Tune-up ✓</div></div></div>
+      </div>
+    </div>
+
+    <div class="content-area" id="area-leads">
+      <div class="page-title">Lead List</div>
+      <p class="page-sub">All leads captured this month.</p>
+      <table class="lead-table">
+        <thead><tr><th>Name</th><th>Service</th><th>Location</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody>
+          <tr><td>Sarah M.</td><td>AC not cooling</td><td>Miami</td><td><span class="lead-badge badge-new">New</span></td><td>Jun 16</td></tr>
+          <tr><td>Tom R.</td><td>Annual tune-up</td><td>Doral</td><td><span class="lead-badge badge-new">New</span></td><td>Jun 16</td></tr>
+          <tr><td>Linda K.</td><td>Duct cleaning</td><td>Brickell</td><td><span class="lead-badge badge-contacted">Contacted</span></td><td>Jun 15</td></tr>
+          <tr><td>Marcus J.</td><td>Full system replace</td><td>Kendall</td><td><span class="lead-badge badge-qualified">Qualified</span></td><td>Jun 14</td></tr>
+          <tr><td>James T.</td><td>AC installation</td><td>Hialeah</td><td><span class="lead-badge badge-booked">Booked ✓</span></td><td>Jun 13</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-area" id="area-calendar">
+      <div class="page-title">Calendar</div>
+      <p class="page-sub">View and manage your scheduled appointments.</p>
+      <div class="add-appt-btn">+ Add appointment</div>
+      <div class="cal-toolbar">
+        <div class="cal-nav"><div class="cal-nav-btn">‹</div><div class="cal-title-text">June 2026</div><div class="cal-nav-btn">›</div></div>
+        <div class="cal-toggles">
+          <button class="cal-tog" onclick="calView('day',this)">Day</button>
+          <button class="cal-tog" onclick="calView('week',this)">Week</button>
+          <button class="cal-tog active" onclick="calView('month',this)">Month</button>
+        </div>
+      </div>
+      <div id="cal-body"></div>
+    </div>
+
+    <div class="content-area" id="area-jobs">
+      <div class="page-title">Jobs</div>
+      <p class="page-sub">Scheduled and completed service visits.</p>
+      <table class="lead-table">
+        <thead><tr><th>Client</th><th>Service</th><th>Technician</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>James T.</td><td>AC Installation</td><td>Mike R.</td><td>Jun 18</td><td><span class="lead-badge badge-booked">Scheduled</span></td></tr>
+          <tr><td>Derek W.</td><td>Tune-up</td><td>Mike R.</td><td>Jun 12</td><td><span class="lead-badge badge-booked" style="background:rgba(34,197,94,.2);color:#4ADE80;">Complete ✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-area" id="area-notifications">
+      <div class="page-title">Notifications</div>
+      <p class="page-sub">Recent activity on your account.</p>
+      <div class="notif"><div class="notif-dot"></div><div><div class="notif-text">New lead — Sarah M. is looking for AC repair in Miami.</div><div class="notif-time">2 hours ago</div></div></div>
+      <div class="notif"><div class="notif-dot read"></div><div><div class="notif-text">Derek W. left a 5-star Google review.</div><div class="notif-time">Yesterday</div></div></div>
+    </div>
+
+    <div class="content-area" id="area-settings">
+      <div class="page-title">Settings</div>
+      <p class="page-sub">Manage your account preferences.</p>
+      <div class="notif" style="flex-direction:column;gap:8px;"><div style="font-size:13px;font-weight:500;">Business info</div><div style="font-size:13px;color:var(--mute);">Premier HVAC Solutions · client@hvaccompany.example</div></div>
+    </div>
+  </div>
+</div>
+
+<footer><div class="foot"><span>© 2026 InnoVista Strategies.</span><span><a href="pricing.html">Plans</a> · <a href="login.html">Sign out</a></span></div></footer>
+
+<script>
+const appts={16:['Sarah M. · 9am'],18:['James T. · 10am','Linda K. · 2pm'],19:['Rosa V. · 11am'],20:['Marcus J. · 9am'],22:['Anna P. · 1pm']};
+const hours=['7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm'];
+const dayAppts={9:'James T. — AC Install',14:'Linda K. — Duct Cleaning'};
+const weekDays=['Mon 16','Tue 17','Wed 18','Thu 19','Fri 20','Sat 21','Sun 22'];
+const weekAppts={0:{9:'Sarah M.'},2:{10:'James T.',14:'Linda K.'},3:{11:'Rosa V.'},4:{9:'Marcus J.'},6:{13:'Anna P.'}};
+function calView(v,btn){document.querySelectorAll('.cal-tog').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCal(v);}
+function renderCal(view='month'){
+  const body=document.getElementById('cal-body');
+  if(view==='month'){
+    let h=`<div class="cal-day-names">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="cal-day-name">${d}</div>`).join('')}</div><div class="cal-month-grid"><div class="cal-cell empty"></div>`;
+    for(let d=1;d<=30;d++){const t=d===18;h+=`<div class="cal-cell${t?' today':''}"><div class="cal-num${t?' today-num':''}">${d}</div>${(appts[d]||[]).map(a=>`<div class="cal-appt">${a}</div>`).join('')}</div>`;}
+    body.innerHTML=h+'</div>';
+  } else if(view==='week'){
+    let h=`<div class="cal-week-grid"><div class="cal-week-head"></div>${weekDays.map((d,i)=>`<div class="cal-week-head${i===2?' today-col':''}">${d}</div>`).join('')}`;
+    hours.forEach(hr=>{const n=parseInt(hr)+(hr.includes('pm')&&!hr.startsWith('12')?12:0);h+=`<div class="cal-time-col">${hr}</div>${weekDays.map((_,di)=>`<div class="cal-week-cell${di===2?' today-col':''}">${weekAppts[di]&&weekAppts[di][n]?`<div class="cal-week-appt">${weekAppts[di][n]}</div>`:''}</div>`).join('')}`;});
+    body.innerHTML=h+'</div>';
+  } else {
+    let h=`<div style="font-size:14px;font-weight:500;margin-bottom:14px;">Wednesday, June 18</div><div class="cal-day-grid">`;
+    hours.forEach(hr=>{const n=parseInt(hr)+(hr.includes('pm')&&!hr.startsWith('12')?12:0);const a=dayAppts[n];h+=`<div class="cal-day-time">${hr}</div><div class="cal-day-slot">${a?`<div class="cal-day-appt">${a}</div>`:''}</div>`;});
+    body.innerHTML=h+'</div>';
+  }
+}
+function show(area,el){
+  document.querySelectorAll('.content-area').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
+  document.getElementById('area-'+area).classList.add('active');
+  if(el)el.classList.add('active');
+  if(area==='calendar')renderCal('month');
+  return false;
+}
+renderCal('month');
+</script>
+</body>
+</html>

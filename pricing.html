@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>InnoVista — Plans & Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0F0F0F;--surface:#161616;--surface2:#1C1C1C;
+    --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+    --green:#22C55E;--green-dim:#7BC47B;
+    --text:#FFFFFF;--mute:rgba(255,255,255,0.55);--dim:rgba(255,255,255,0.4);
+    --fb:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--fb);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  header{border-bottom:0.5px solid var(--line);position:sticky;top:0;background:rgba(15,15,15,0.85);backdrop-filter:blur(12px);z-index:50;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;}
+  .brand{font-size:18px;font-weight:500;color:var(--text);text-decoration:none;letter-spacing:-0.02em;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{font-size:13px;color:var(--mute);text-decoration:none;}
+  .nav-links a:hover,.nav-links a.active{color:var(--text);}
+  .nav-login{padding:9px 20px;border:0.5px solid var(--line2);border-radius:999px;font-size:13px;color:var(--text);text-decoration:none;}
+  .hero{padding:90px 0 60px;text-align:center;}
+  .eyebrow{font-size:12px;letter-spacing:0.14em;color:var(--green-dim);text-transform:uppercase;margin-bottom:26px;}
+  h1{font-size:clamp(34px,5vw,52px);font-weight:500;letter-spacing:-0.03em;line-height:1.1;margin-bottom:18px;}
+  h1 em{font-style:normal;color:var(--mute);}
+  .hero-sub{font-size:16px;color:var(--mute);max-width:440px;margin:0 auto;line-height:1.6;}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin:60px 0 90px;border:0.5px solid var(--line);}
+  .plan{background:var(--bg);padding:36px 32px;display:flex;flex-direction:column;}
+  .plan.featured{background:var(--surface);}
+  .plan-name{font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;}
+  .plan-price{font-size:42px;font-weight:500;letter-spacing:-0.02em;line-height:1;margin-bottom:6px;}
+  .plan-price span{font-size:15px;color:var(--mute);font-weight:400;}
+  .plan-desc{font-size:13px;color:var(--mute);margin-bottom:28px;padding-bottom:24px;border-bottom:0.5px solid var(--line);line-height:1.5;}
+  .features{list-style:none;flex:1;margin-bottom:32px;}
+  .features li{font-size:14px;color:var(--mute);padding:9px 0;display:flex;gap:10px;}
+  .features li.included{color:var(--text);}
+  .features li.excluded{opacity:.35;text-decoration:line-through;}
+  .features li.ai span{color:#FBBF24;}
+  .btn-plan{display:block;text-align:center;padding:12px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none;}
+  .btn-outline{border:0.5px solid var(--line2);color:var(--text);}
+  .btn-solid{background:#fff;color:#0F0F0F;}
+  .compare{margin-bottom:90px;}
+  .compare h2{font-size:24px;font-weight:500;letter-spacing:-0.02em;margin-bottom:30px;}
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  thead th{text-align:center;padding:14px 16px;font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--dim);border-bottom:0.5px solid var(--line2);}
+  thead th:first-child{text-align:left;}
+  .th-featured{color:var(--green-dim)!important;}
+  tbody tr{border-bottom:0.5px solid var(--line);}
+  tbody td{padding:12px 16px;color:var(--mute);text-align:center;}
+  tbody td:first-child{text-align:left;color:var(--text);}
+  .section-row td{color:var(--green-dim)!important;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:18px 16px 8px;border-bottom:none;}
+  .cell-yes{color:var(--text);}
+  .cell-no{color:var(--dim);}
+  .cell-ai{color:#FBBF24;font-size:12px;}
+  footer{border-top:0.5px solid var(--line);}
+  .foot{display:flex;justify-content:space-between;padding:28px 0;font-size:12px;color:var(--dim);flex-wrap:wrap;gap:10px;}
+  .foot a{color:var(--mute);text-decoration:none;}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="index.html">InnoVista</a>
+  <div class="nav-links">
+    <a href="index.html#how-it-works">How it works</a>
+    <a href="pricing.html" class="active">Pricing</a>
+    <a class="nav-login" href="login.html">Log in</a>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Plans & pricing</div>
+    <h1>Start free. Scale<br/><em>when you're ready.</em></h1>
+    <p class="hero-sub">Automate your follow-up, then let AI run your leads around the clock.</p>
+  </div>
+
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">Basic</div>
+      <div class="plan-price">$0<span>/mo</span></div>
+      <div class="plan-desc">Capture leads and manage your calendar manually. No card required.</div>
+      <ul class="features">
+        <li class="included">Lead capture form</li>
+        <li class="included">Email notifications</li>
+        <li class="included">Missed call text back</li>
+        <li class="included">Manual appointment calendar</li>
+        <li class="excluded">SMS automation</li>
+        <li class="excluded">Pipeline dashboard</li>
+        <li class="excluded">AI chatbot</li>
+      </ul>
+      <a class="btn-plan btn-outline" href="login.html">Get started free</a>
+    </div>
+    <div class="plan featured">
+      <div class="plan-name">Standard</div>
+      <div class="plan-price">$297<span>/mo</span></div>
+      <div class="plan-desc">Automate follow-up and let the system book jobs for you.</div>
+      <ul class="features">
+        <li class="included">Everything in Basic</li>
+        <li class="included">SMS follow-up automation</li>
+        <li class="included">Automated booking calendar</li>
+        <li class="included">Pipeline / Kanban dashboard</li>
+        <li class="included">Lead list & detail view</li>
+        <li class="included">Google review automation</li>
+        <li class="excluded">AI chatbot & voice calling</li>
+      </ul>
+      <a class="btn-plan btn-solid" href="login.html">Start Standard →</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">$597<span>/mo</span></div>
+      <div class="plan-desc">Full AI automation. Qualifies, books, follows up — 24/7.</div>
+      <ul class="features">
+        <li class="included">Everything in Standard</li>
+        <li class="included ai"><span>★</span> AI chatbot — 24/7 qualification</li>
+        <li class="included ai"><span>★</span> AI voice calling</li>
+        <li class="included">Advanced reporting</li>
+        <li class="included">Multi-location support</li>
+        <li class="included">White label options</li>
+        <li class="included">Priority support</li>
+      </ul>
+      <a class="btn-plan btn-outline" href="login.html">Start Pro →</a>
+    </div>
+  </div>
+
+  <div class="compare">
+    <h2>Compare all features</h2>
+    <table>
+      <thead><tr><th>Feature</th><th>Basic</th><th class="th-featured">Standard</th><th>Pro</th></tr></thead>
+      <tbody>
+        <tr class="section-row"><td colspan="4">Lead capture</td></tr>
+        <tr><td>Lead capture form</td><td><span class="cell-yes">✓</span></td><td><span class="cell-yes">✓</span></td><td><span class="cell-yes">✓</span></td></tr>
+        <tr><td>SMS follow-up automation</td><td><span class="cell-no">—</span></td><td><span class="cell-yes">✓</span></td><td><span class="cell-yes">✓</span></td></tr>
+        <tr class="section-row"><td colspan="4">Calendar & booking</td></tr>
+        <tr><td>Appointment calendar</td><td><span class="cell-no" style="font-size:12px;">Manual only</span></td><td><span class="cell-yes">✓ Automated</span></td><td><span class="cell-yes">✓ Automated</span></td></tr>
+        <tr class="section-row"><td colspan="4">AI features</td></tr>
+        <tr><td>AI chatbot</td><td><span class="cell-no">—</span></td><td><span class="cell-no">—</span></td><td><span class="cell-ai">★ Pro only</span></td></tr>
+        <tr><td>AI voice calling</td><td><span class="cell-no">—</span></td><td><span class="cell-no">—</span></td><td><span class="cell-ai">★ Pro only</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer><div class="wrap foot"><span>© 2026 InnoVista Strategies.</span><span><a href="index.html">Home</a> · <a href="login.html">Log in</a></span></div></footer>
+</body>
+</html>

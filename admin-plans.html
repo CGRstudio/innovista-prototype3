@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>InnoVista — Plan Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0F0F0F;--surface:#161616;--surface2:#1C1C1C;
+    --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+    --green:#22C55E;--green-dim:#7BC47B;
+    --text:#FFFFFF;--mute:rgba(255,255,255,0.55);--dim:rgba(255,255,255,0.4);
+    --fb:'Inter',sans-serif;--sidebar:220px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--fb);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;}
+  header{border-bottom:0.5px solid var(--line);position:sticky;top:0;z-index:10;background:var(--bg);}
+  .nav{display:flex;align-items:center;gap:11px;padding:0 24px;height:60px;}
+  .brand{font-size:17px;font-weight:500;color:var(--text);text-decoration:none;letter-spacing:-0.02em;}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+  .role-badge{font-size:11px;color:var(--green-dim);background:rgba(34,197,94,0.1);border:0.5px solid rgba(34,197,94,0.25);padding:4px 10px;border-radius:999px;}
+  .signout{font-size:13px;color:var(--mute);text-decoration:none;padding:7px 14px;border:0.5px solid var(--line);border-radius:7px;}
+  .layout{display:flex;flex:1;}
+  aside{width:var(--sidebar);border-right:0.5px solid var(--line);padding:20px 0;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
+  .aside-section{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);padding:0 16px;margin:20px 0 6px;}
+  .aside-section:first-child{margin-top:0;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:14px;color:var(--mute);text-decoration:none;cursor:pointer;border-left:2px solid transparent;}
+  .nav-item:hover{color:var(--text);}
+  .nav-item.active{color:var(--text);background:var(--surface);border-left-color:var(--green);}
+  .nav-icon{width:16px;height:16px;flex-shrink:0;opacity:.7;}
+  .nav-item.active .nav-icon{opacity:1;}
+  .main{flex:1;padding:32px 36px;}
+  .page-title{font-size:22px;font-weight:500;letter-spacing:-0.02em;margin-bottom:4px;}
+  .page-sub{font-size:14px;color:var(--mute);margin-bottom:28px;}
+  .summary-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:0.5px solid var(--line);margin-bottom:28px;}
+  .scard{background:var(--bg);padding:20px;}
+  .scard-val{font-size:30px;font-weight:500;}
+  .scard-label{font-size:12px;color:var(--dim);margin-top:4px;}
+  table{width:100%;border-collapse:collapse;}
+  thead th{text-align:left;font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--dim);padding:12px 14px;border-bottom:0.5px solid var(--line2);}
+  tbody tr{border-bottom:0.5px solid var(--line);}
+  tbody tr:hover{background:var(--surface);}
+  tbody td{padding:14px;font-size:14px;color:var(--mute);}
+  tbody td:first-child{color:var(--text);}
+  .plan-select{background:var(--surface2);border:0.5px solid var(--line);border-radius:6px;padding:6px 10px;font-size:13px;color:var(--text);font-family:var(--fb);cursor:pointer;}
+  .toggle-wrap{display:flex;gap:6px;flex-wrap:wrap;}
+  .toggle{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--mute);background:var(--surface2);border:0.5px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer;}
+  .toggle.on{color:var(--green-dim);border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.08);}
+  .toggle.ai-feat.on{color:#FBBF24;border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.08);}
+  .save-btn{background:#fff;color:#0F0F0F;border:none;border-radius:6px;padding:7px 16px;font-size:13px;font-weight:500;cursor:pointer;}
+  .saved-msg{font-size:12px;color:var(--green-dim);display:none;margin-left:8px;}
+  footer{border-top:0.5px solid var(--line);}
+  .foot{display:flex;justify-content:space-between;padding:16px 24px;font-size:12px;color:var(--dim);flex-wrap:wrap;gap:10px;}
+  .foot a{color:var(--mute);text-decoration:none;}
+</style>
+</head>
+<body>
+<header><div class="nav">
+  <a class="brand" href="index.html">InnoVista</a>
+  <div class="nav-right"><span class="role-badge">InnoVista Admin</span><a class="signout" href="login.html">Sign out</a></div>
+</div></header>
+
+<div class="layout">
+  <aside>
+    <div class="aside-section">Agency</div>
+    <a class="nav-item active" href="admin-plans.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/></svg>Plan Management</a>
+    <a class="nav-item" href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>All Clients</a>
+    <div class="aside-section">Platform</div>
+    <a class="nav-item" href="pricing.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="1" y="4" width="22" height="16" rx="2"/></svg>Pricing Page</a>
+    <div class="aside-section">Account</div>
+    <a class="nav-item" href="login.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/></svg>Sign out</a>
+  </aside>
+
+  <div class="main">
+    <div class="page-title">Plan Management</div>
+    <p class="page-sub">Control which features each client can access based on their plan.</p>
+    <div class="summary-cards">
+      <div class="scard"><div class="scard-val">3</div><div class="scard-label">Basic clients</div></div>
+      <div class="scard"><div class="scard-val">5</div><div class="scard-label">Standard clients</div></div>
+      <div class="scard"><div class="scard-val">2</div><div class="scard-label">Pro clients</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Business</th><th>Trade</th><th>Plan</th><th>Active Features</th><th></th></tr></thead>
+      <tbody id="client-rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer><div class="foot"><span>© 2026 InnoVista Strategies.</span><span><a href="index.html">Home</a></span></div></footer>
+
+<script>
+const FEATURES={basic:['Lead Form','Email Alerts','Manual Calendar'],standard:['Lead Form','Email Alerts','Manual Calendar','SMS Automation','Auto Calendar','Pipeline','Review Requests'],pro:['Lead Form','Email Alerts','Manual Calendar','SMS Automation','Auto Calendar','Pipeline','Review Requests','AI Chatbot ★','AI Voice ★','Advanced Reports']};
+const AI_FEATS=['AI Chatbot ★','AI Voice ★'];
+const clients=[{name:'Premier HVAC Solutions',trade:'HVAC',plan:'pro'},{name:'SunState Roofing',trade:'Roofing',plan:'standard'},{name:'Ace Plumbing Co.',trade:'Plumbing',plan:'basic'},{name:'Bright Electric',trade:'Electrical',plan:'standard'},{name:'CoolBreeze Air',trade:'HVAC',plan:'pro'}];
+const state=clients.map(c=>({...c,features:[...FEATURES[c.plan]]}));
+function renderToggles(i){const wrap=document.getElementById('toggles-'+i);wrap.innerHTML='';FEATURES[state[i].plan].forEach(feat=>{const on=state[i].features.includes(feat),isAI=AI_FEATS.includes(feat);const div=document.createElement('div');div.className='toggle'+(on?(isAI?' on ai-feat':' on'):'');div.textContent=feat;div.onclick=()=>toggleFeat(i,feat);wrap.appendChild(div);});}
+function changePlan(i,plan){state[i].plan=plan;state[i].features=[...FEATURES[plan]];renderToggles(i);}
+function toggleFeat(i,feat){const idx=state[i].features.indexOf(feat);if(idx>-1)state[i].features.splice(idx,1);else state[i].features.push(feat);renderToggles(i);}
+function save(i){const msg=document.getElementById('saved-'+i);msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},2000);}
+function render(){const tbody=document.getElementById('client-rows');tbody.innerHTML='';state.forEach((c,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${c.name}</td><td>${c.trade}</td><td><select class="plan-select" onchange="changePlan(${i},this.value)"><option value="basic"${c.plan==='basic'?' selected':''}>Basic</option><option value="standard"${c.plan==='standard'?' selected':''}>Standard</option><option value="pro"${c.plan==='pro'?' selected':''}>Pro</option></select></td><td><div class="toggle-wrap" id="toggles-${i}"></div></td><td><button class="save-btn" onclick="save(${i})">Save</button><span class="saved-msg" id="saved-${i}">✓ Saved</span></td>`;tbody.appendChild(tr);renderToggles(i);});}
+render();
+</script>
+</body>
+</html>

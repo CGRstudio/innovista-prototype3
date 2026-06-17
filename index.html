@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>InnoVista — Stop chasing leads. Start booking jobs.</title>
+<meta name="description" content="InnoVista answers, texts back, and qualifies every lead in seconds — then books the job straight to your calendar."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0F0F0F;--surface:#161616;
+    --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.16);
+    --green:#22C55E;--green-dim:#7BC47B;
+    --text:#FFFFFF;--mute:rgba(255,255,255,0.55);--dim:rgba(255,255,255,0.4);
+    --fb:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--fb);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  header{border-bottom:0.5px solid var(--line);position:sticky;top:0;background:rgba(15,15,15,0.85);backdrop-filter:blur(12px);z-index:50;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;}
+  .brand{font-size:18px;font-weight:500;color:var(--text);text-decoration:none;letter-spacing:-0.02em;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{font-size:13px;color:var(--mute);text-decoration:none;transition:color .15s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-login{padding:9px 20px;border:0.5px solid var(--line2);border-radius:999px;font-size:13px;color:var(--text);text-decoration:none;transition:border-color .15s;}
+  .nav-login:hover{border-color:rgba(255,255,255,0.4);}
+
+  .hero{padding:110px 0 0;}
+  .eyebrow{font-size:12px;letter-spacing:0.14em;color:var(--green-dim);text-transform:uppercase;margin-bottom:30px;}
+  h1{font-size:clamp(40px,6.5vw,68px);font-weight:500;line-height:1.04;letter-spacing:-0.03em;margin-bottom:34px;max-width:680px;}
+  .hero-sub{font-size:17px;color:var(--mute);line-height:1.6;max-width:420px;margin-bottom:52px;}
+  .hero-btns{display:flex;align-items:center;gap:24px;margin-bottom:90px;}
+  .btn-primary{padding:15px 30px;background:#fff;color:#0F0F0F;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none;transition:opacity .15s;}
+  .btn-primary:hover{opacity:.85;}
+  .btn-link{font-size:14px;color:var(--mute);text-decoration:none;display:flex;align-items:center;gap:6px;}
+  .btn-link:hover{color:var(--text);}
+
+  .stats-row{display:flex;border-top:0.5px solid var(--line);}
+  .stat{flex:1;padding:30px 0;border-right:0.5px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat-val{font-size:30px;font-weight:500;letter-spacing:-0.02em;}
+  .stat-label{font-size:13px;color:var(--dim);margin-top:6px;}
+
+  .section{padding:130px 0;border-bottom:0.5px solid var(--line);}
+  .section-label{font-size:12px;letter-spacing:0.12em;color:var(--green-dim);text-transform:uppercase;margin-bottom:24px;}
+  .section-statement{font-size:clamp(28px,4vw,42px);font-weight:500;line-height:1.25;letter-spacing:-0.02em;max-width:760px;}
+  .section-statement em{font-style:normal;color:var(--mute);}
+
+  .steps-list{margin-top:80px;display:flex;flex-direction:column;}
+  .step-row{display:grid;grid-template-columns:60px 1fr 1fr;gap:32px;align-items:start;padding:38px 0;border-top:0.5px solid var(--line);}
+  .step-row:first-child{border-top:0.5px solid var(--line);}
+  .step-num{font-size:13px;color:var(--dim);font-weight:500;}
+  .step-title{font-size:22px;font-weight:500;letter-spacing:-0.01em;}
+  .step-desc{font-size:15px;color:var(--mute);line-height:1.6;align-self:center;}
+
+  .feat-list{margin-top:80px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);}
+  .feat-item{background:var(--bg);padding:32px;}
+  .feat-title{font-size:17px;font-weight:500;margin-bottom:10px;}
+  .feat-desc{font-size:14px;color:var(--mute);line-height:1.6;}
+
+  .cta-band{padding:120px 0;text-align:center;}
+  .cta-statement{font-size:clamp(32px,5vw,52px);font-weight:500;letter-spacing:-0.03em;line-height:1.1;margin-bottom:40px;}
+  .cta-btns{display:flex;align-items:center;justify-content:center;gap:24px;}
+
+  footer{padding:48px 0;}
+  .foot{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--dim);flex-wrap:wrap;gap:14px;}
+  .foot a{color:var(--mute);text-decoration:none;}
+  .foot a:hover{color:var(--text);}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="brand" href="index.html">InnoVista</a>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="pricing.html">Pricing</a>
+    <a class="nav-login" href="login.html">Log in</a>
+  </div>
+</div></header>
+
+<main>
+  <div class="wrap hero">
+    <div class="eyebrow">For home service businesses</div>
+    <h1>Stop chasing leads.<br/>Start booking jobs.</h1>
+    <p class="hero-sub">Every missed call becomes a booked appointment. Automatically.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="login.html">Get started free</a>
+      <a class="btn-link" href="#how-it-works">See how it works →</a>
+    </div>
+  </div>
+
+  <div class="wrap"><div class="stats-row">
+    <div class="stat"><div class="stat-val">60 sec</div><div class="stat-label">Average response time</div></div>
+    <div class="stat"><div class="stat-val">24/7</div><div class="stat-label">Always capturing leads</div></div>
+    <div class="stat"><div class="stat-val">3×</div><div class="stat-label">More jobs booked</div></div>
+  </div></div>
+
+  <div class="section" id="how-it-works"><div class="wrap">
+    <div class="section-label">How it works</div>
+    <div class="section-statement">From missed call to booked job. <em>No human required.</em></div>
+    <div class="steps-list">
+      <div class="step-row"><div class="step-num">01</div><div class="step-title">Lead comes in</div><div class="step-desc">A homeowner calls or fills out a form. Captured instantly, even on a missed call.</div></div>
+      <div class="step-row"><div class="step-num">02</div><div class="step-title">AI replies in 60 seconds</div><div class="step-desc">A personalized text starts the conversation before the lead goes cold.</div></div>
+      <div class="step-row"><div class="step-num">03</div><div class="step-title">Lead gets qualified</div><div class="step-desc">The right questions get asked — service, location, urgency — automatically.</div></div>
+      <div class="step-row"><div class="step-num">04</div><div class="step-title">Job gets booked</div><div class="step-desc">Straight to your calendar, with reminders sent. Done.</div></div>
+    </div>
+  </div></div>
+
+  <div class="section" id="features"><div class="wrap">
+    <div class="section-label">What's included</div>
+    <div class="section-statement">Everything to run leads <em>on autopilot.</em></div>
+    <div class="feat-list">
+      <div class="feat-item"><div class="feat-title">AI chatbot</div><div class="feat-desc">Qualifies every lead, 24/7. Pro plan.</div></div>
+      <div class="feat-item"><div class="feat-title">Instant SMS follow-up</div><div class="feat-desc">Every lead texted within 60 seconds.</div></div>
+      <div class="feat-item"><div class="feat-title">Automated booking</div><div class="feat-desc">Jobs land on your calendar with reminders.</div></div>
+      <div class="feat-item"><div class="feat-title">Lead pipeline</div><div class="feat-desc">See every lead's status at a glance.</div></div>
+      <div class="feat-item"><div class="feat-title">Review requests</div><div class="feat-desc">Happy customers asked for a review automatically.</div></div>
+      <div class="feat-item"><div class="feat-title">Client portal</div><div class="feat-desc">Homeowners see their quote and appointments.</div></div>
+    </div>
+  </div></div>
+
+  <div class="cta-band"><div class="wrap">
+    <div class="cta-statement">Start free.<br/>Scale when you're ready.</div>
+    <div class="cta-btns">
+      <a class="btn-primary" href="login.html">Get started free</a>
+      <a class="btn-link" href="pricing.html">Compare plans →</a>
+    </div>
+  </div></div>
+</main>
+
+<footer><div class="wrap foot">
+  <span>© 2026 InnoVista Strategies.</span>
+  <span><a href="pricing.html">Pricing</a> · <a href="login.html">Log in</a></span>
+</div></footer>
+
+</body>
+</html>
